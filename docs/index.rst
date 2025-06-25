@@ -5,7 +5,16 @@
 
 django-recaptcha
 ================
+django-recaptcha is a Python package used to protect the forms of Django web applications from abuse with reCAPTCHA.
+It currently supports three different versions of reCAPTCHA:
+
+- reCAPTCHA v2 Checkbox
+- reCAPTCHA v2 Invisible
+- reCAPTCHA v3
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Content
+
+   getting_started

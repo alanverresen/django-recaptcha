@@ -18,3 +18,4 @@ It currently supports three different versions of reCAPTCHA:
    :caption: Content
 
    getting_started
+   configuration

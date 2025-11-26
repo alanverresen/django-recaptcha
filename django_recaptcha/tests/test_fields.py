@@ -57,33 +57,19 @@ class TestFields(TestCase):
         self.assertIn('data-sitekey="NewPubKey"', html)
 
     def test_get_remote_ip_returns_remote_addr(self):
-        class IPForm(forms.Form):
-            captcha = fields.ReCaptchaField()
-
-        form = IPForm()
-
+        field = fields.ReCaptchaField()
         mock_request = Mock(META={"REMOTE_ADDR": "192.0.2.1"})
 
-        with patch.object(
-            form.fields["captcha"], "get_request", return_value=mock_request
-        ):
-            remote_ip = form.fields["captcha"].get_remote_ip()
+        with patch.object(field, "get_request", return_value=mock_request):
+            remote_ip = field.get_remote_ip()
             self.assertEqual(remote_ip, "192.0.2.1")
 
     def test_get_remote_ip_returns_x_forwarded_for(self):
-        class IPForm(forms.Form):
-            captcha = fields.ReCaptchaField()
+        field = fields.ReCaptchaField()
+        mock_request = Mock(META={"REMOTE_ADDR": "192.0.2.1", "HTTP_X_FORWARDED_FOR": "192.0.2.2"})
 
-        form = IPForm()
-
-        mock_request = Mock(
-            META={"REMOTE_ADDR": "192.0.2.1", "HTTP_X_FORWARDED_FOR": "192.0.2.2"}
-        )
-
-        with patch.object(
-            form.fields["captcha"], "get_request", return_value=mock_request
-        ):
-            remote_ip = form.fields["captcha"].get_remote_ip()
+        with patch.object(field, "get_request", return_value=mock_request):
+            remote_ip = field.get_remote_ip()
             self.assertEqual(remote_ip, "192.0.2.2")
 
     @patch("django_recaptcha.client.recaptcha_request")

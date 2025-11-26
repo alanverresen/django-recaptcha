@@ -56,6 +56,21 @@ class TestFields(TestCase):
         html = form.as_p()
         self.assertIn('data-sitekey="NewPubKey"', html)
 
+    def test_get_remote_ip_missing_request(self):
+        field = fields.ReCaptchaField()
+
+        with patch.object(field, "get_request", return_value=None):
+            remote_ip = field.get_remote_ip()
+            self.assertIsNone(remote_ip)
+
+    def test_get_remote_ip_missing_remote_addr(self):
+        field = fields.ReCaptchaField()
+        mock_request = Mock(META={})
+
+        with patch.object(field, "get_request", return_value=mock_request):
+            remote_ip = field.get_remote_ip()
+            self.assertEqual(remote_ip, "")
+
     def test_get_remote_ip_returns_remote_addr(self):
         field = fields.ReCaptchaField()
         mock_request = Mock(META={"REMOTE_ADDR": "192.0.2.1"})

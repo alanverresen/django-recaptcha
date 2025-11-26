@@ -79,14 +79,6 @@ class TestFields(TestCase):
             remote_ip = field.get_remote_ip()
             self.assertEqual(remote_ip, "192.0.2.1")
 
-    def test_get_remote_ip_returns_x_forwarded_for(self):
-        field = fields.ReCaptchaField()
-        mock_request = Mock(META={"REMOTE_ADDR": "192.0.2.1", "HTTP_X_FORWARDED_FOR": "192.0.2.2"})
-
-        with patch.object(field, "get_request", return_value=mock_request):
-            remote_ip = field.get_remote_ip()
-            self.assertEqual(remote_ip, "192.0.2.2")
-
     @patch("django_recaptcha.client.recaptcha_request")
     def test_field_captcha_errors(self, mocked_response):
         read_mock = MagicMock()

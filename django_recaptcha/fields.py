@@ -61,11 +61,7 @@ class ReCaptchaField(forms.CharField):
 
     def get_remote_ip(self):
         request = self.get_request()
-        if request:
-            remote_ip = request.META.get("REMOTE_ADDR", "")
-            forwarded_ip = request.META.get("HTTP_X_FORWARDED_FOR", "")
-            ip = remote_ip if not forwarded_ip else forwarded_ip
-            return ip
+        return request.META.get("REMOTE_ADDR", "") if request else None
 
     def log_warning(self, message):
         logger.warning(message)

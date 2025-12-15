@@ -248,6 +248,33 @@ captcha = fields.ReCaptchaField(
 
 Setting an action is entirely optional. If you don't specify an action, no action will be passed to the reCAPTCHA V3 API.
 
+
+### Accessing reCAPTCHA response data
+
+As of version 4.2 of django-recaptcha, you can access the data of the response returned by the reCAPTCHA API after validation through a field's `recaptcha_response` property.
+It's an instance of `RecaptchaResponse`, which has four members:
+
+- `is_valid`
+  - corresponds to response object's `"success"` field
+  - was token valid? (`True` or `False`)
+- `error_codes`
+  - corresponds to response object's `"error-codes"` field
+  - a list of error codes (e.g. `["missing-input-secret"]`)
+- `action`
+  - corresponds to response object's `"action"` field
+  - `str` or `None`
+- `extra_data`
+  - a `dict` instance with the response object's other fields
+
+For example, if you're using reCAPTCHA v3 and want to access the score AFTER validation,
+you can attempt to access the score as demonstrated:
+
+```python
+score = captcha.recaptcha_response.extra_data.get("score")
+```
+
+It's value is `None` before validation.
+
 ### Local Development and Functional Testing
 
 If `RECAPTCHA_PUBLIC_KEY` and `RECAPTCHA_PRIVATE_KEY` are not set,

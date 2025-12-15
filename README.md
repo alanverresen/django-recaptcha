@@ -263,7 +263,7 @@ It's an instance of `RecaptchaResponse`, which has four members:
   - a list of error codes (e.g. `["missing-input-secret"]`)
 - `action`
   - corresponds to response object's `"action"` field
-  - `str` or `None`
+  - `str` or `None` (e.g. `"login"`)
 - `extra_data`
   - a `dict` instance with the response object's other fields
 
@@ -274,7 +274,7 @@ you can attempt to access the score as demonstrated:
 score = captcha.recaptcha_response.extra_data.get("score")
 ```
 
-It's value is `None` before validation.
+Its value is `None` before validation.
 
 ### Local Development and Functional Testing
 

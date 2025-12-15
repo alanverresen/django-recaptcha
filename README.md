@@ -19,6 +19,7 @@
   - [Widgets](#widgets)
   - [reCAPTCHA V3 Score](#recaptcha-v3-score)
   - [reCAPTCHA V3 Action](#recaptcha-v3-action)
+  - [Accessing reCAPTCHA response data](#accessing-recaptcha-response-data)
   - [Local Development and Functional Testing](#local-development-and-functional-testing)
 - [Credits](#credits)
 
